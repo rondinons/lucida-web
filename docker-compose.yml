@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lucida
+      POSTGRES_PASSWORD: lucida
+      POSTGRES_DB: lucida
+    ports:
+      - "5432:5432"
+    volumes:
+      - lucida_postgres_data:/var/lib/postgresql/data
+
+  # Se suma cuando entren las colas de recordatorios (BullMQ) en Fase 2.
+  # redis:
+  #   image: redis:7-alpine
+  #   ports:
+  #     - "6379:6379"
+
+volumes:
+  lucida_postgres_data:

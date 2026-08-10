@@ -1,0 +1,296 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Auth / usuarios
+// ---------------------------------------------------------------------------
+
+enum Rol {
+  PROFESIONAL
+  ASISTENTE // habilitado en Fase 5 (permisos granulares vía Permiso)
+}
+
+enum ProveedorOAuth {
+  GOOGLE
+  MICROSOFT
+}
+
+model Usuario {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  nombre    String
+  avatarUrl String?
+  rol       Rol      @default(PROFESIONAL)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cuentasOAuth      CuentaOAuth[]
+  perfilProfesional PerfilProfesional?
+  permisos          Permiso[]
+
+  @@map("usuarios")
+}
+
+// Vínculo de identidad OAuth (Auth.js) — un usuario puede tener Google y/o Microsoft.
+model CuentaOAuth {
+  id                String         @id @default(cuid())
+  usuarioId         String
+  usuario           Usuario        @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  proveedor         ProveedorOAuth
+  proveedorCuentaId String
+  createdAt         DateTime       @default(now())
+
+  @@unique([proveedor, proveedorCuentaId])
+  @@index([usuarioId])
+  @@map("cuentas_oauth")
+}
+
+// Permisos granulares para el rol Asistente (Fase 5). Se modela desde Fase 1
+// para no tener que migrar el esquema de autorización más adelante.
+enum RecursoPermiso {
+  AGENDA
+  PACIENTES
+  COBROS
+  CONFIGURACION
+  INFORMACION_CLINICA
+}
+
+model Permiso {
+  id        String          @id @default(cuid())
+  usuarioId String
+  usuario   Usuario         @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  recurso   RecursoPermiso
+  puedeVer  Boolean         @default(false)
+  puedeEditar Boolean       @default(false)
+
+  @@unique([usuarioId, recurso])
+  @@map("permisos")
+}
+
+// ---------------------------------------------------------------------------
+// Configuración multi-país (sección 11 del documento de arquitectura)
+// ---------------------------------------------------------------------------
+
+model CountryConfig {
+  countryCode        String  @id // ISO 3166-1 alpha-2, ej. "AR"
+  nombre              String
+  fiscalIdLabel       String // "CUIT", "RUT", "RFC"...
+  fiscalIdRegex        String
+  defaultCurrency     String // ISO 4217, ej. "ARS"
+  timezoneDefault     String // ej. "America/Argentina/Buenos_Aires"
+  phonePrefix         String // ej. "+54"
+  billingAdapter      String // "afip" | "internal_pdf" | "sii_cl" | "sat_mx" ...
+  dataProtectionLaw   String // ej. "Ley 25.326"
+
+  perfiles PerfilProfesional[]
+
+  @@map("country_config")
+}
+
+// ---------------------------------------------------------------------------
+// Perfil profesional / consultorios / horarios / tipos de sesión
+// ---------------------------------------------------------------------------
+
+// Estado del certificado de facturación electrónica (AFIP/SII/...). Ver
+// KAN-25: el MVP solo necesita mostrar el estado, no gestionar el archivo.
+enum EstadoCertificadoFiscal {
+  PENDIENTE
+  CARGADO
+  VENCIDO
+}
+
+model PerfilProfesional {
+  id           String   @id @default(cuid())
+  usuarioId    String   @unique
+  usuario      Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  especialidad String?
+  bio          String?
+  fiscalId     String? // formato validado según CountryConfig.fiscalIdRegex
+  telefono     String? // validado con libphonenumber-js en el cliente
+  countryCode  String
+  country      CountryConfig @relation(fields: [countryCode], references: [countryCode])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // KAN-24 — Recordatorios automáticos de sesión.
+  recordatoriosActivos          Boolean @default(false)
+  recordatoriosDiasAnticipacion Int[]   @default([1])
+
+  // KAN-25 — Configuración de facturación y cobros (entry points; la
+  // integración real con AFIP/SII y Mercado Pago llega en Fase 4).
+  mercadoPagoConectado    Boolean                  @default(false)
+  certificadoFiscalEstado EstadoCertificadoFiscal?
+
+  consultorios Consultorio[]
+  tiposSesion  TipoSesion[]
+  pacientes    Paciente[]
+  sesiones     Sesion[]
+  preguntasPlantillaNota PreguntaPlantillaNota[]
+
+  @@map("perfiles_profesionales")
+}
+
+model Consultorio {
+  id             String   @id @default(cuid())
+  profesionalId  String
+  profesional    PerfilProfesional @relation(fields: [profesionalId], references: [id], onDelete: Cascade)
+  nombre         String
+  direccion      String?
+  esVirtual      Boolean  @default(false)
+  timezone       String // IANA tz, por defecto el de CountryConfig del profesional
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  horarios Horario[]
+  sesiones Sesion[]
+
+  @@index([profesionalId])
+  @@map("consultorios")
+}
+
+enum DiaSemana {
+  LUNES
+  MARTES
+  MIERCOLES
+  JUEVES
+  VIERNES
+  SABADO
+  DOMINGO
+}
+
+// Disponibilidad recurrente semanal de un consultorio (agenda básica Fase 1,
+// sin sync externo todavía — eso se suma en Fase 2 vía CalendarioExterno).
+model Horario {
+  id            String      @id @default(cuid())
+  consultorioId String
+  consultorio   Consultorio @relation(fields: [consultorioId], references: [id], onDelete: Cascade)
+  diaSemana     DiaSemana
+  horaInicio    String // "HH:mm", interpretado en el timezone del consultorio
+  horaFin       String
+  createdAt     DateTime    @default(now())
+
+  @@index([consultorioId])
+  @@map("horarios")
+}
+
+enum MetodoPago {
+  EFECTIVO
+  TRANSFERENCIA
+  MERCADO_PAGO
+  OTRO
+}
+
+model TipoSesion {
+  id               String  @id @default(cuid())
+  profesionalId    String
+  profesional      PerfilProfesional @relation(fields: [profesionalId], references: [id], onDelete: Cascade)
+  nombre           String
+  duracionMinutos  Int
+  precio           Decimal @db.Decimal(12, 2)
+  moneda           String // ISO 4217, default = CountryConfig.defaultCurrency del profesional
+  metodosPago      MetodoPago[] // heredados por defecto al crear un turno (KAN-36)
+  activo           Boolean @default(true)
+
+  sesiones Sesion[]
+
+  @@index([profesionalId])
+  @@map("tipos_sesion")
+}
+
+// KAN-23 — Preguntas configurables que guían la nota de sesión (modo Texto
+// y como bloques insertables en el modo Pizarrón). "orden" define su
+// posición; reordenar es reescribir este campo en cada fila afectada.
+model PreguntaPlantillaNota {
+  id            String   @id @default(cuid())
+  profesionalId String
+  profesional   PerfilProfesional @relation(fields: [profesionalId], references: [id], onDelete: Cascade)
+  texto         String
+  orden         Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([profesionalId, orden])
+  @@map("preguntas_plantilla_nota")
+}
+
+// ---------------------------------------------------------------------------
+// Pacientes (versión mínima — sin datos clínicos; eso vive cifrado E2E,
+// fuera de este esquema, a partir de Fase 3)
+// ---------------------------------------------------------------------------
+
+model Paciente {
+  id            String   @id @default(cuid())
+  profesionalId String
+  profesional   PerfilProfesional @relation(fields: [profesionalId], references: [id], onDelete: Cascade)
+  nombre        String
+  email         String?
+  telefono      String?
+  consentimientoEn      DateTime? // fecha de aceptación de la política de datos
+  consentimientoVersion String?   // versión de la política vigente al momento
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sesiones Sesion[]
+
+  @@index([profesionalId])
+  @@map("pacientes")
+}
+
+// ---------------------------------------------------------------------------
+// Agenda (sesiones) — horarios se guardan siempre en UTC (startAt/endAt)
+// ---------------------------------------------------------------------------
+
+enum EstadoSesion {
+  PROGRAMADA
+  CONFIRMADA
+  CANCELADA
+  COMPLETADA
+  AUSENTE
+}
+
+model Sesion {
+  id             String       @id @default(cuid())
+  profesionalId  String
+  profesional    PerfilProfesional @relation(fields: [profesionalId], references: [id], onDelete: Cascade)
+  consultorioId  String
+  consultorio    Consultorio  @relation(fields: [consultorioId], references: [id])
+  tipoSesionId   String
+  tipoSesion     TipoSesion   @relation(fields: [tipoSesionId], references: [id])
+  pacienteId     String?
+  paciente       Paciente?    @relation(fields: [pacienteId], references: [id])
+  startAt        DateTime // UTC
+  endAt          DateTime // UTC
+  metodosPago    MetodoPago[] // heredados del TipoSesion al crear (KAN-36), editables solo en este turno
+  estado         EstadoSesion @default(PROGRAMADA)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  // notaSesion: cifrada E2E, se agrega en Fase 3 (packages/database no
+  // almacena la clave ni el contenido en claro — ver sección 5 del doc).
+
+  @@index([profesionalId, startAt])
+  @@index([consultorioId, startAt])
+  @@map("sesiones")
+}
+
+// ---------------------------------------------------------------------------
+// Leads (landing pública — formulario "Solicitar demo", sin autenticación)
+// ---------------------------------------------------------------------------
+
+model Lead {
+  id             String   @id @default(cuid())
+  nombre         String
+  email          String
+  profesion      String
+  aceptaContacto Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("leads")
+}
