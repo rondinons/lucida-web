@@ -8,7 +8,8 @@ import { InputField } from "../ui/input-field";
 import { Button } from "../ui/button";
 import { trackEvent } from "@/lib/analytics";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+// Formspree: sin backend propio para este formulario — ver apps/web/.env.example.
+const FORMSPREE_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
 
 export function DemoForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -30,10 +31,18 @@ export function DemoForm() {
 
   async function onSubmit(data: LeadInput) {
     setServerError(null);
+
+    if (!FORMSPREE_ENDPOINT) {
+      setServerError(
+        "El formulario todavía no está conectado (falta NEXT_PUBLIC_FORMSPREE_ENDPOINT).",
+      );
+      return;
+    }
+
     try {
-      const res = await fetch(`${API_URL}/leads`, {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error("request_failed");
