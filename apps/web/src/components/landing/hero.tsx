@@ -1,8 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import { Container, Eyebrow } from "../ui/container";
 import { ButtonLink } from "../ui/button";
-import { ProductMockup } from "./product-mockup";
 import { trackEvent } from "@/lib/analytics";
 
 const TRUST_ITEMS = ["Sin instalación", "Acompañamiento inicial", "Probala sin compromiso"];
@@ -16,7 +16,7 @@ export function Hero() {
         <h1 className="mt-5 max-w-3xl text-[40px] font-semibold leading-[1.08] tracking-tight text-brand-ink sm:text-6xl lg:text-[68px]">
           Todo tu consultorio,
           <br />
-          <span className="text-brand-purple">en un mismo lugar.</span>
+          <span className="text-brand-primary">en un mismo lugar.</span>
         </h1>
 
         <p className="mt-6 max-w-prose text-lg leading-relaxed text-brand-gray sm:text-xl">
@@ -30,7 +30,7 @@ export function Hero() {
           </ButtonLink>
           <a
             href="#producto"
-            className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-brand-purple-dark hover:text-brand-purple"
+            className="inline-flex items-center gap-1.5 text-[15px] font-semibold text-brand-dark hover:text-brand-primary"
           >
             Ver cómo funciona
             <span aria-hidden="true">↓</span>
@@ -49,7 +49,16 @@ export function Hero() {
         </ul>
 
         <div className="mt-14 w-full max-w-5xl lg:mt-16">
-          <ProductMockup variant="dashboard" animate />
+          <div className="animate-soft-enter overflow-hidden rounded-card border border-brand-border bg-white shadow-float">
+            <Image
+              src="/brand/lucida-dashboard-note.png"
+              alt="Panel principal y nota de sesión de Lúcida"
+              width={1440}
+              height={1024}
+              priority
+              className="h-auto w-full"
+            />
+          </div>
         </div>
       </Container>
     </section>

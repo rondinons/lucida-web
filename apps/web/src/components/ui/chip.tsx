@@ -10,7 +10,7 @@ export function Chip({
   className?: string;
 }) {
   const toneClasses =
-    tone === "mint" ? "bg-brand-mint text-brand-forest" : "bg-brand-lavender text-brand-purple-dark";
+    tone === "mint" ? "bg-brand-mint text-brand-forest" : "bg-brand-lavender text-brand-dark";
   return (
     <span
       className={cn(

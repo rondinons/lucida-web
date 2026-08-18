@@ -30,7 +30,7 @@ export function Header() {
     <header
       className={`sticky top-0 z-50 transition-all duration-200 ease-out ${
         scrolled
-          ? "border-b border-brand-border bg-white/80 backdrop-blur-md"
+          ? "border-b border-brand-border bg-brand-bg/85 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
@@ -42,7 +42,7 @@ export function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="text-[15px] font-medium text-brand-ink transition-colors hover:text-brand-purple"
+              className="text-[15px] font-medium text-brand-ink transition-colors hover:text-brand-primary"
             >
               {link.label}
             </a>
@@ -75,7 +75,7 @@ export function Header() {
       </Container>
 
       {menuOpen ? (
-        <div className="border-t border-brand-border bg-white px-5 py-6 lg:hidden">
+        <div className="border-t border-brand-border bg-brand-bg px-5 py-6 lg:hidden">
           <nav className="flex flex-col gap-5">
             {NAV_LINKS.map((link) => (
               <a

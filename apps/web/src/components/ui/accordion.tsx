@@ -37,7 +37,7 @@ export function Accordion({
               <span className="text-base font-semibold text-brand-ink">{item.question}</span>
               <span
                 className={cn(
-                  "shrink-0 text-xl text-brand-purple transition-transform duration-200 ease-out",
+                  "shrink-0 text-xl text-brand-primary transition-transform duration-200 ease-out",
                   isOpen && "rotate-45",
                 )}
                 aria-hidden="true"

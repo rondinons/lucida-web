@@ -59,14 +59,14 @@ export function HowItWorks() {
             aria-hidden="true"
           >
             <div
-              className="h-px bg-brand-purple transition-all duration-[1200ms] ease-out"
+              className="h-px bg-brand-primary transition-all duration-[1200ms] ease-out"
               style={{ width: filled ? "100%" : "0%" }}
             />
           </div>
 
           {STEPS.map((step, i) => (
             <Reveal key={step.number} delay={i * 120} className="relative flex flex-col items-center text-center sm:items-start sm:text-left">
-              <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border border-brand-border bg-white font-display text-sm font-bold text-brand-purple-dark">
+              <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border border-brand-border bg-white font-display text-sm font-bold text-brand-dark">
                 {step.number}
               </span>
               <h3 className="mt-5 text-lg font-semibold text-brand-ink">{step.title}</h3>

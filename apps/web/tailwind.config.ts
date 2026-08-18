@@ -2,7 +2,8 @@ import type { Config } from "tailwindcss";
 
 // Paleta legada (lucida.purple/orange) usada por el dashboard interno —
 // no tocar, rompería (dashboard)/*. La landing usa el namespace `brand`
-// con la paleta violeta/verde del documento de rediseño.
+// con la identidad real de Lúcida: verde + lavanda + crema, farol como
+// isotipo (ver apps/web/public/brand/).
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
@@ -28,23 +29,26 @@ const config: Config = {
           },
         },
         brand: {
-          purple: "#6757C8",
-          "purple-hover": "#5747B7",
-          "purple-dark": "#403479",
-          "purple-border": "#D8D2EF",
-          lavender: "#F0EDFA",
-          green: "#87AA96",
-          forest: "#456B55",
-          mint: "#EDF5F0",
-          ink: "#27252D",
-          gray: "#69666F",
-          border: "#E4E1E7",
-          "input-border": "#DAD7DF",
-          bg: "#FBFAF8",
+          primary: "#2F6D59",
+          "primary-hover": "#25594A",
+          dark: "#1F3D33",
+          "dark-border": "#CFE0D5",
+          cta: "#A7DFBF",
+          "cta-hover": "#8FCDA8",
+          lavender: "#EDE8F5",
+          "lavender-strong": "#B8A6D9",
+          green: "#2F6D59",
+          forest: "#1F3D33",
+          mint: "#E3F3E9",
+          ink: "#2C2336",
+          gray: "#6B6270",
+          border: "#E6E0D3",
+          "input-border": "#DCD5C6",
+          bg: "#FBF8F3",
         },
       },
       fontFamily: {
-        display: ["var(--font-manrope)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-playfair)", "Georgia", "serif"],
         sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       borderRadius: {
@@ -65,9 +69,24 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        "soft-enter": {
+          "0%": { opacity: "0", transform: "translateY(14px) scale(0.985)" },
+          "100%": { opacity: "1", transform: "none" },
+        },
+        "soft-float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-4px)" },
+        },
+        "tech-float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-5px)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 500ms ease-out forwards",
+        "soft-enter": "soft-enter 700ms ease-out forwards",
+        "soft-float": "soft-float 4s ease-in-out infinite",
+        "tech-float": "tech-float 3.5s ease-in-out infinite",
       },
     },
   },

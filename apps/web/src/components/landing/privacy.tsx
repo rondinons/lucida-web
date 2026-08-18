@@ -18,7 +18,7 @@ const POINTS = [
 
 export function Privacy() {
   return (
-    <section id="privacidad" className="scroll-mt-24 bg-brand-purple-dark py-24 text-white lg:py-32">
+    <section id="privacidad" className="scroll-mt-24 bg-brand-dark py-24 text-white lg:py-32">
       <Container>
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-[13px] font-bold uppercase tracking-[0.08em] text-white/70">

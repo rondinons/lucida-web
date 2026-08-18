@@ -3,18 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #1e1b2e;
+  --background: #fbf8f3;
+  --foreground: #2c2336;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+  }
+
+  /* Playfair Display para títulos, solo dentro de la landing pública —
+     el dashboard interno no debe heredar esto. */
+  .landing-root h1,
+  .landing-root h2,
+  .landing-root h3 {
+    font-family: var(--font-playfair), Georgia, serif;
   }
 
   @media (prefers-reduced-motion: reduce) {

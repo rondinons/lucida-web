@@ -1,8 +1,13 @@
+import Image from "next/image";
 import { Container, Eyebrow } from "../ui/container";
 import { Chip } from "../ui/chip";
 import { Reveal } from "../ui/reveal";
 
-const INTEGRATIONS = ["Google Calendar", "Google Meet", "Mercado Pago"];
+const INTEGRATIONS = [
+  { name: "Google Calendar", src: "/brand/google-calendar.png" },
+  { name: "Google Meet", src: "/brand/google-meet.png" },
+  { name: "Mercado Pago", src: "/brand/mercado-pago.svg" },
+];
 
 export function Integrations() {
   return (
@@ -15,16 +20,18 @@ export function Integrations() {
           </h2>
         </Reveal>
 
-        <Reveal delay={100} className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-base font-medium text-brand-gray">
-          {INTEGRATIONS.map((name, i) => (
-            <span key={name} className="flex items-center gap-8">
-              {name}
-              {i < INTEGRATIONS.length - 1 ? <span className="text-brand-border">·</span> : null}
-            </span>
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-5">
+          {INTEGRATIONS.map((item, i) => (
+            <Reveal key={item.name} delay={i * 80}>
+              <div className="flex animate-tech-float items-center gap-3 rounded-card border border-brand-border bg-white px-5 py-4 shadow-float">
+                <Image src={item.src} alt="" width={32} height={32} className="h-8 w-8 shrink-0" />
+                <span className="text-base font-medium text-brand-gray">{item.name}</span>
+              </div>
+            </Reveal>
           ))}
-        </Reveal>
+        </div>
 
-        <Reveal delay={160} className="mt-6 flex flex-col items-center gap-3">
+        <Reveal delay={220} className="mt-8 flex flex-col items-center gap-3">
           <Chip>Integraciones previstas</Chip>
           <p className="max-w-md text-sm text-brand-gray">
             Se incorporarán progresivamente luego de su validación técnica y funcional.

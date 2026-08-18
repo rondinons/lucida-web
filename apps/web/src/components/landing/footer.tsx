@@ -33,7 +33,7 @@ export function Footer() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-brand-gray hover:text-brand-purple"
+                className="text-sm text-brand-gray hover:text-brand-primary"
               >
                 {link.label}
               </a>
@@ -47,7 +47,7 @@ export function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-sm text-brand-gray hover:text-brand-purple"
+                  className="text-sm text-brand-gray hover:text-brand-primary"
                 >
                   {link.label}
                 </a>
@@ -55,7 +55,7 @@ export function Footer() {
             </div>
             <a
               href="mailto:hola@somoslucida.com"
-              className="mt-2 text-sm text-brand-gray hover:text-brand-purple"
+              className="mt-2 text-sm text-brand-gray hover:text-brand-primary"
             >
               hola@somoslucida.com
             </a>
@@ -66,11 +66,11 @@ export function Footer() {
           <p>© 2026 Lúcida</p>
           <div className="flex items-center gap-4">
             {/* TODO: enlazar a páginas reales de Privacidad y Términos */}
-            <a href="#" className="hover:text-brand-purple">
+            <a href="#" className="hover:text-brand-primary">
               Privacidad
             </a>
             <span aria-hidden="true">·</span>
-            <a href="#" className="hover:text-brand-purple">
+            <a href="#" className="hover:text-brand-primary">
               Términos
             </a>
           </div>
