@@ -5,32 +5,38 @@ import { ResponsiveShot } from "./responsive-shot";
 
 type Block = { alt: string; title: string; body: string } & (
   | { kind: "single"; src: string; width: number; height: number }
-  | { kind: "responsive"; desktopSrc: string; mobileSrc: string }
+  | {
+      kind: "responsive";
+      desktopSrc: string;
+      mobileSrc: string;
+      desktopWidth: number;
+      desktopHeight: number;
+      mobileWidth: number;
+      mobileHeight: number;
+    }
 );
 
 const BLOCKS: Block[] = [
   {
-    kind: "single",
-    src: "/brand/lucida-agenda-mobile.png",
-    alt: "Agenda de Lúcida en celular",
-    width: 390,
-    height: 920,
+    kind: "responsive",
+    desktopSrc: "/brand/lucida-agenda-desktop.png",
+    mobileSrc: "/brand/lucida-agenda-mobile.png",
+    desktopWidth: 1440,
+    desktopHeight: 1080,
+    mobileWidth: 390,
+    mobileHeight: 920,
+    alt: "Agenda de Lúcida",
     title: "Organizá tu día sin perder de vista nada importante.",
     body: "Turnos, disponibilidad y actividades desde una sola vista.",
-  },
-  {
-    kind: "single",
-    src: "/brand/lucida-dashboard-mobile.png",
-    alt: "Panel principal de Lúcida en celular",
-    width: 390,
-    height: 1180,
-    title: "Toda la información necesaria en una sola ventana.",
-    body: "Datos principales y seguimiento organizados por paciente.",
   },
   {
     kind: "responsive",
     desktopSrc: "/brand/lucida-dashboard-desktop.png",
     mobileSrc: "/brand/lucida-dashboard-inicio-mobile.png",
+    desktopWidth: 1440,
+    desktopHeight: 900,
+    mobileWidth: 390,
+    mobileHeight: 1180,
     alt: "Panel principal de Lúcida",
     title: "Dale continuidad a cada proceso.",
     body: "Registrá cada encuentro y consultá fácilmente el recorrido.",
@@ -64,6 +70,10 @@ export function ProductShowcase() {
                   <ResponsiveShot
                     desktopSrc={block.desktopSrc}
                     mobileSrc={block.mobileSrc}
+                    desktopWidth={block.desktopWidth}
+                    desktopHeight={block.desktopHeight}
+                    mobileWidth={block.mobileWidth}
+                    mobileHeight={block.mobileHeight}
                     alt={block.alt}
                     imgClassName="h-auto max-h-[520px] w-auto"
                   />

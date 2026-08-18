@@ -9,28 +9,36 @@ export function ResponsiveShot({
   alt,
   priority = false,
   imgClassName = "h-auto w-full",
+  desktopWidth = 1440,
+  desktopHeight = 900,
+  mobileWidth = 390,
+  mobileHeight = 1180,
 }: {
   desktopSrc: string;
   mobileSrc: string;
   alt: string;
   priority?: boolean;
   imgClassName?: string;
+  desktopWidth?: number;
+  desktopHeight?: number;
+  mobileWidth?: number;
+  mobileHeight?: number;
 }) {
   return (
     <>
       <Image
         src={desktopSrc}
         alt={alt}
-        width={1440}
-        height={900}
+        width={desktopWidth}
+        height={desktopHeight}
         priority={priority}
         className={cn("hidden sm:block", imgClassName)}
       />
       <Image
         src={mobileSrc}
         alt={alt}
-        width={390}
-        height={1180}
+        width={mobileWidth}
+        height={mobileHeight}
         priority={priority}
         className={cn("sm:hidden", imgClassName)}
       />
