@@ -15,7 +15,7 @@ import { ScrollTracker } from "@/components/landing/scroll-tracker";
 
 export default function LandingPage() {
   return (
-    <main className="bg-white">
+    <main className="landing-root bg-brand-bg">
       <ScrollTracker />
       <Header />
       <Hero />

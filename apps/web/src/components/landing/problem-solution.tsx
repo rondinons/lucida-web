@@ -40,10 +40,10 @@ export function ProblemSolution() {
         </div>
 
         <Reveal className="mt-10 flex flex-col items-center gap-4">
-          <span className="text-2xl text-brand-purple" aria-hidden="true">
+          <span className="text-2xl text-brand-primary" aria-hidden="true">
             ↓
           </span>
-          <div className="rounded-card bg-brand-purple px-8 py-5 text-center shadow-float">
+          <div className="rounded-card bg-brand-primary px-8 py-5 text-center shadow-float">
             <p className="text-lg font-semibold text-white sm:text-xl">Todo conectado en Lúcida.</p>
           </div>
         </Reveal>

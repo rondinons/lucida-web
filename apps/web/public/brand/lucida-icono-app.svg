@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1024" height="1024">
+
+    <defs>
+      <linearGradient id="glassGlow" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#FFF8EC" stop-opacity="0.95"/>
+        <stop offset="55%" stop-color="#F8D7BF" stop-opacity="0.68"/>
+        <stop offset="100%" stop-color="#E8B091" stop-opacity="0.20"/>
+      </linearGradient>
+      <radialGradient id="lightGlow" cx="50%" cy="52%" r="58%">
+        <stop offset="0%" stop-color="#FFFDF7" stop-opacity="1"/>
+        <stop offset="45%" stop-color="#FCE4C8" stop-opacity="0.9"/>
+        <stop offset="100%" stop-color="#F1B494" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+        <feOffset dx="0" dy="4" result="offsetblur"/>
+        <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+        <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    
+  <rect x="28" y="28" width="456" height="456" rx="105" fill="#F7F2E9"/>
+  <g transform="translate(73,70) scale(1.03)">
+    
+    <g transform="translate(0.000,0.000) scale(1)">
+      <!-- orbit -->
+      <path d="M70 245 C115 285, 235 286, 306 220 C329 199, 338 177, 328 161"
+            fill="none" stroke="#8E80C7" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="327" cy="161" r="10" fill="#8E80C7"/>
+
+      <!-- lantern -->
+      <g filter="url(#softShadow)">
+        <!-- handle -->
+        <circle cx="188" cy="56" r="15" fill="none" stroke="#E8B091" stroke-width="4"/>
+        <path d="M164 83 Q188 70 212 83" fill="none" stroke="#E8B091" stroke-width="4" stroke-linecap="round"/>
+        <!-- top -->
+        <path d="M157 90 L219 90 L233 105 L143 105 Z" fill="none" stroke="#E8B091" stroke-width="4" stroke-linejoin="round"/>
+        <rect x="148" y="104" width="80" height="12" rx="6" fill="#E8B091" fill-opacity="0.16" stroke="#E8B091" stroke-width="3"/>
+        <!-- frame bars -->
+        <path d="M154 115 L154 222" fill="none" stroke="#E8B091" stroke-width="4" stroke-linecap="round"/>
+        <path d="M222 115 L222 222" fill="none" stroke="#E8B091" stroke-width="4" stroke-linecap="round"/>
+        <!-- glass -->
+        <rect x="161" y="118" width="54" height="102" rx="16" fill="url(#glassGlow)" stroke="#E8B091" stroke-opacity="0.75" stroke-width="2"/>
+        <ellipse cx="188" cy="170" rx="43" ry="50" fill="url(#lightGlow)"/>
+        <!-- base -->
+        <path d="M143 223 L233 223 L221 237 L155 237 Z" fill="none" stroke="#E8B091" stroke-width="4" stroke-linejoin="round"/>
+        <rect x="150" y="236" width="76" height="10" rx="5" fill="#E8B091" fill-opacity="0.16" stroke="#E8B091" stroke-width="3"/>
+      </g>
+    </g>
+    
+  </g>
+</svg>

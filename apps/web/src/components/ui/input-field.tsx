@@ -18,7 +18,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           id={inputId}
           ref={ref}
           className={cn(
-            "h-[52px] rounded-input border bg-white px-4 text-[15px] text-brand-ink placeholder:text-brand-gray/60 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-purple",
+            "h-[52px] rounded-input border bg-white px-4 text-[15px] text-brand-ink placeholder:text-brand-gray/60 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary",
             error ? "border-red-400" : "border-brand-input-border",
             className,
           )}
@@ -54,7 +54,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
           id={selectId}
           ref={ref}
           className={cn(
-            "h-[52px] rounded-input border bg-white px-4 text-[15px] text-brand-ink transition-colors focus:outline-none focus:ring-2 focus:ring-brand-purple",
+            "h-[52px] rounded-input border bg-white px-4 text-[15px] text-brand-ink transition-colors focus:outline-none focus:ring-2 focus:ring-brand-primary",
             error ? "border-red-400" : "border-brand-input-border",
             className,
           )}

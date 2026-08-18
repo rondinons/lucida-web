@@ -68,7 +68,7 @@ export function DemoForm() {
         {/* TODO: reemplazar "#" por la URL real de Instagram de Lúcida */}
         <a
           href="#"
-          className="mt-6 text-[15px] font-semibold text-brand-purple-dark hover:text-brand-purple"
+          className="mt-6 text-[15px] font-semibold text-brand-dark hover:text-brand-primary"
         >
           Seguir a Lúcida en Instagram
         </a>
@@ -106,7 +106,7 @@ export function DemoForm() {
       <label className="flex items-start gap-3 text-sm text-brand-gray">
         <input
           type="checkbox"
-          className="mt-0.5 h-4 w-4 rounded border-brand-input-border text-brand-purple focus:ring-2 focus:ring-brand-purple"
+          className="mt-0.5 h-4 w-4 rounded border-brand-input-border text-brand-primary focus:ring-2 focus:ring-brand-primary"
           {...register("aceptaContacto")}
         />
         Acepto recibir información sobre la demo y novedades de Lúcida.

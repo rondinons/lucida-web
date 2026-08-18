@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Manrope, Inter } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import { QueryProvider } from "@/components/query-provider";
 import "./globals.css";
 
-const manrope = Manrope({
+const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
-  variable: "--font-manrope",
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${manrope.variable} ${inter.variable}`}>
+    <html lang="es" className={`${playfair.variable} ${inter.variable}`}>
       <body>
         <QueryProvider>{children}</QueryProvider>
       </body>
