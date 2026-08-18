@@ -7,7 +7,7 @@ import { ButtonLink } from "../ui/button";
 import { trackEvent } from "@/lib/analytics";
 
 const NAV_LINKS = [
-  { href: "#funcionalidades", label: "Funcionalidades" },
+  { href: "#funcionalidades", label: "Características" },
   { href: "#como-funciona", label: "Cómo funciona" },
   { href: "#privacidad", label: "Tus datos" },
   { href: "#preguntas", label: "Preguntas" },
