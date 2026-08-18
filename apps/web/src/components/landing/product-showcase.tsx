@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Container } from "../ui/container";
 import { Reveal } from "../ui/reveal";
 import { ResponsiveShot } from "./responsive-shot";
+import { CobrosShot } from "./cobros-shot";
 
 type Block = { alt: string; title: string; body: string } & (
   | { kind: "single"; src: string; width: number; height: number }
@@ -14,6 +15,7 @@ type Block = { alt: string; title: string; body: string } & (
       mobileWidth: number;
       mobileHeight: number;
     }
+  | { kind: "cobros" }
 );
 
 const BLOCKS: Block[] = [
@@ -42,11 +44,8 @@ const BLOCKS: Block[] = [
     body: "Registrá cada encuentro y consultá fácilmente el recorrido.",
   },
   {
-    kind: "single",
-    src: "/brand/lucida-professional-profile.png",
-    alt: "Configuración del perfil profesional en Lúcida",
-    width: 1440,
-    height: 1024,
+    kind: "cobros",
+    alt: "Cobros en Lúcida",
     title: "Mantené también lo administrativo bajo control.",
     body: "Seguimiento de cobros y tareas relacionadas con tu práctica.",
   },
@@ -77,6 +76,8 @@ export function ProductShowcase() {
                     alt={block.alt}
                     imgClassName="h-auto max-h-[520px] w-auto"
                   />
+                ) : block.kind === "cobros" ? (
+                  <CobrosShot />
                 ) : (
                   <Image
                     src={block.src}

@@ -17,8 +17,8 @@ export function Logo({ inverted = false, className }: { inverted?: boolean; clas
         className="h-8 w-auto shrink-0"
         priority
       />
-      <span className={cn("text-xl font-semibold lowercase", inverted ? "text-white" : "text-brand-ink")}>
-        lúcida
+      <span className={cn("text-xl font-semibold", inverted ? "text-white" : "text-brand-ink")}>
+        Lúcida
       </span>
     </Link>
   );
