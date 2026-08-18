@@ -8,11 +8,11 @@ const PRODUCT_LINKS = [
   { href: "#preguntas", label: "Preguntas" },
 ];
 
-// TODO: reemplazar "#" por las URLs reales de LinkedIn y Facebook.
+// TODO: reemplazar "#" por la URL real de LinkedIn.
 const SOCIAL_LINKS = [
   { href: "https://instagram.com/applucida", label: "Instagram" },
   { href: "#", label: "LinkedIn" },
-  { href: "#", label: "Facebook" },
+  { href: "https://facebook.com/applucida", label: "Facebook" },
 ];
 
 export function Footer() {
