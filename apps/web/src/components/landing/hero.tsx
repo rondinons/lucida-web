@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { Container, Eyebrow } from "../ui/container";
 import { ButtonLink } from "../ui/button";
+import { ResponsiveShot } from "./responsive-shot";
 import { trackEvent } from "@/lib/analytics";
 
 const TRUST_ITEMS = ["Sin instalación", "Acompañamiento inicial", "Probala sin compromiso"];
@@ -50,13 +50,11 @@ export function Hero() {
 
         <div className="mt-14 w-full max-w-5xl lg:mt-16">
           <div className="animate-soft-enter overflow-hidden rounded-card border border-brand-border bg-white shadow-float">
-            <Image
-              src="/brand/lucida-dashboard-note.png"
-              alt="Panel principal y nota de sesión de Lúcida"
-              width={1440}
-              height={1024}
+            <ResponsiveShot
+              desktopSrc="/brand/lucida-dashboard-desktop.png"
+              mobileSrc="/brand/lucida-dashboard-inicio-mobile.png"
+              alt="Panel principal de Lúcida"
               priority
-              className="h-auto w-full"
             />
           </div>
         </div>

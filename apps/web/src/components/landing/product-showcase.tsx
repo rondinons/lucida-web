@@ -1,9 +1,16 @@
 import Image from "next/image";
 import { Container } from "../ui/container";
 import { Reveal } from "../ui/reveal";
+import { ResponsiveShot } from "./responsive-shot";
 
-const BLOCKS = [
+type Block = { alt: string; title: string; body: string } & (
+  | { kind: "single"; src: string; width: number; height: number }
+  | { kind: "responsive"; desktopSrc: string; mobileSrc: string }
+);
+
+const BLOCKS: Block[] = [
   {
+    kind: "single",
     src: "/brand/lucida-agenda-mobile.png",
     alt: "Agenda de Lúcida en celular",
     width: 390,
@@ -12,6 +19,7 @@ const BLOCKS = [
     body: "Turnos, disponibilidad y actividades desde una sola vista.",
   },
   {
+    kind: "single",
     src: "/brand/lucida-dashboard-mobile.png",
     alt: "Panel principal de Lúcida en celular",
     width: 390,
@@ -20,14 +28,15 @@ const BLOCKS = [
     body: "Datos principales y seguimiento organizados por paciente.",
   },
   {
-    src: "/brand/lucida-dashboard-note.png",
-    alt: "Nota de sesión de un paciente en Lúcida",
-    width: 1440,
-    height: 1024,
+    kind: "responsive",
+    desktopSrc: "/brand/lucida-dashboard-desktop.png",
+    mobileSrc: "/brand/lucida-dashboard-inicio-mobile.png",
+    alt: "Panel principal de Lúcida",
     title: "Dale continuidad a cada proceso.",
     body: "Registrá cada encuentro y consultá fácilmente el recorrido.",
   },
   {
+    kind: "single",
     src: "/brand/lucida-professional-profile.png",
     alt: "Configuración del perfil profesional en Lúcida",
     width: 1440,
@@ -51,13 +60,22 @@ export function ProductShowcase() {
           >
             <div className="flex w-full justify-center lg:w-1/2">
               <div className="overflow-hidden rounded-card border border-brand-border bg-white shadow-float">
-                <Image
-                  src={block.src}
-                  alt={block.alt}
-                  width={block.width}
-                  height={block.height}
-                  className="h-auto max-h-[520px] w-auto"
-                />
+                {block.kind === "responsive" ? (
+                  <ResponsiveShot
+                    desktopSrc={block.desktopSrc}
+                    mobileSrc={block.mobileSrc}
+                    alt={block.alt}
+                    imgClassName="h-auto max-h-[520px] w-auto"
+                  />
+                ) : (
+                  <Image
+                    src={block.src}
+                    alt={block.alt}
+                    width={block.width}
+                    height={block.height}
+                    className="h-auto max-h-[520px] w-auto"
+                  />
+                )}
               </div>
             </div>
             <div className="w-full text-center lg:w-1/2 lg:text-left">
