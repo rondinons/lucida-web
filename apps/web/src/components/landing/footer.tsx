@@ -8,9 +8,9 @@ const PRODUCT_LINKS = [
   { href: "#preguntas", label: "Preguntas" },
 ];
 
-// TODO: reemplazar "#" por las URLs reales de cada red social.
+// TODO: reemplazar "#" por las URLs reales de LinkedIn y Facebook.
 const SOCIAL_LINKS = [
-  { href: "#", label: "Instagram" },
+  { href: "https://instagram.com/applucida", label: "Instagram" },
   { href: "#", label: "LinkedIn" },
   { href: "#", label: "Facebook" },
 ];
@@ -47,6 +47,8 @@ export function Footer() {
                 <a
                   key={link.label}
                   href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="text-sm text-brand-gray hover:text-brand-primary"
                 >
                   {link.label}
@@ -54,10 +56,10 @@ export function Footer() {
               ))}
             </div>
             <a
-              href="mailto:hola@somoslucida.com"
+              href="mailto:applucida@gmail.com"
               className="mt-2 text-sm text-brand-gray hover:text-brand-primary"
             >
-              hola@somoslucida.com
+              applucida@gmail.com
             </a>
           </div>
         </div>

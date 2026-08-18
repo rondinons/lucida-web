@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-brand-bg pt-16 pb-20 lg:pt-24 lg:pb-28">
       <Container className="flex flex-col items-center text-center">
-        <Eyebrow>Hecho para profesionales que acompañan</Eyebrow>
+        <Eyebrow>Pensada junto a profesionales de la salud mental</Eyebrow>
 
         <h1 className="mt-5 max-w-3xl text-[40px] font-semibold leading-[1.08] tracking-tight text-brand-ink sm:text-6xl lg:text-[68px]">
           Todo tu consultorio,

@@ -16,7 +16,7 @@ const BLOCKS = [
     alt: "Panel principal de Lúcida en celular",
     width: 390,
     height: 1180,
-    title: "Toda la información necesaria, cuando la necesitás.",
+    title: "Toda la información necesaria en una sola ventana.",
     body: "Datos principales y seguimiento organizados por paciente.",
   },
   {

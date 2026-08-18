@@ -65,9 +65,10 @@ export function DemoForm() {
           Te vamos a contactar para coordinar una demo breve y conocer un poco más sobre tu
           práctica.
         </p>
-        {/* TODO: reemplazar "#" por la URL real de Instagram de Lúcida */}
         <a
-          href="#"
+          href="https://instagram.com/applucida"
+          target="_blank"
+          rel="noopener noreferrer"
           className="mt-6 text-[15px] font-semibold text-brand-dark hover:text-brand-primary"
         >
           Seguir a Lúcida en Instagram
