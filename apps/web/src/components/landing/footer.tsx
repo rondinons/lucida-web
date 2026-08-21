@@ -8,6 +8,11 @@ const PRODUCT_LINKS = [
   { href: "#preguntas", label: "Preguntas" },
 ];
 
+const COMPLIANCE_ITEMS = [
+  "Ley 25.326 (Argentina)",
+  "GDPR (Internacionales)",
+];
+
 // TODO: reemplazar "#" por la URL real de LinkedIn.
 const SOCIAL_LINKS = [
   { href: "https://instagram.com/applucida", label: "Instagram" },
@@ -19,7 +24,7 @@ export function Footer() {
   return (
     <footer className="bg-white py-16">
       <Container>
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <Logo />
             <p className="mt-3 max-w-xs text-sm text-brand-gray">
@@ -62,17 +67,33 @@ export function Footer() {
               applucida@gmail.com
             </a>
           </div>
+
+          <div className="flex flex-col gap-3">
+            <p className="text-sm font-semibold text-brand-ink">Cumplimiento</p>
+            <ul className="flex flex-col gap-3">
+              {COMPLIANCE_ITEMS.map((item) => (
+                <li key={item} className="text-sm text-brand-gray">
+                  {item}
+                </li>
+              ))}
+              <li>
+                <a href="/terminos" className="text-sm text-blue-600 hover:text-blue-700">
+                  Ver Términos
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-brand-border pt-8 text-sm text-brand-gray sm:flex-row">
           <p>© 2026 Lúcida</p>
           <div className="flex items-center gap-4">
-            {/* TODO: enlazar a páginas reales de Privacidad y Términos */}
+            {/* TODO: enlazar a página real de Privacidad */}
             <a href="#" className="hover:text-brand-primary">
               Privacidad
             </a>
             <span aria-hidden="true">·</span>
-            <a href="#" className="hover:text-brand-primary">
+            <a href="/terminos" className="text-blue-600 hover:text-blue-700">
               Términos
             </a>
           </div>
